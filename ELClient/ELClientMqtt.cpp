@@ -66,11 +66,13 @@ void ELClientMqtt::setup(void) {
 @endcode
 */
 void ELClientMqtt::lwt(const char* topic, const char* message, uint8_t qos, uint8_t retain) {
+  long l_qos = qos;
+  long l_retain = retain;
   _elc->Request(CMD_MQTT_LWT, 0, 4);
   _elc->Request(topic, strlen(topic));
   _elc->Request(message, strlen(message));
-  _elc->Request(&qos, 1);
-  _elc->Request(&retain, 1);
+  _elc->Request(&l_qos, 4);
+  _elc->Request(&l_retain, 4);
   _elc->Request();
 }
 
@@ -94,11 +96,13 @@ void ELClientMqtt::lwt(const char* topic, const char* message, uint8_t qos, uint
 void ELClientMqtt::lwt(const __FlashStringHelper* topic, const __FlashStringHelper* message,
     uint8_t qos, uint8_t retain)
 {
+  long l_qos = qos;
+  long l_retain = retain;
   _elc->Request(CMD_MQTT_LWT, 0, 4);
   _elc->Request(topic, strlen_P((const char*)topic));
   _elc->Request(message, strlen_P((const char*)message));
-  _elc->Request(&qos, 1);
-  _elc->Request(&retain, 1);
+  _elc->Request(&l_qos, 4);
+  _elc->Request(&l_retain, 4);
   _elc->Request();
 }
 
